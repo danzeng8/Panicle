@@ -1,5 +1,4 @@
 # Panicle primary branch and stem identification tool
-![](pics/pipeline.PNG)
 ## Introduction
 
 This software extends the method of https://nph.onlinelibrary.wiley.com/doi/full/10.1111/nph.16533 to identify primary branches and the rachises of sorghum panicles, while measuring their traits. The pipeline is similar to that of TopoRoot (https://github.com/danzeng8/TopoRoot), except that during the final stage of the algorithm, primary branches are measured as opposed to the whole hierarchy.
