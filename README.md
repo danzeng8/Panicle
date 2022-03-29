@@ -56,7 +56,7 @@ Please see https://github.com/danzeng8/TopoRoot for instructions on visualizatio
 
 ## Batch Processing
 
-The software will automatically pick S to be the air intensity plus 25, and N and K are chosen as before. TopoRoot can then be run in a batch process mode on an entire folder of image slices (or .raw files, but slices is preferred) using the panicle_batch.py script as follows:
+The software will automatically pick S to be the air intensity plus 25, and N and K are chosen as before. The Panicle code can then be run in a batch process mode on an entire folder of image slices (or .raw files, but slices is preferred) using the panicle_batch.py script as follows:
 
 python panicle_batch.py -i myfolder/ -o outputfolder/ -d downsampling rate [downsampling rate (e.g. 4)]
 
