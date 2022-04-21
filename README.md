@@ -7,13 +7,15 @@ This software extends the method of https://nph.onlinelibrary.wiley.com/doi/full
 
 Open up command prompt, clone the repository (git clone https://github.com/danzeng8/Panicle.git.git), then navigate to the main directory. Panicle.exe can be run as follows. The first three arguments are required, while the rest are optional:
 
-Panicle --in [input_file] --out [output_file] --S [shape] --K [kernel] --N [neighborhood] --d [downsampling rate] --lowerRadius [decimal/float value] --upperRadius [decimal/float value]
+Panicle --in [input_file] --out [output_file] --S [shape] --K [kernel] --N [neighborhood] --d [downsampling rate] --lowerRadius [decimal/float value] --upperRadius [decimal/float value] 
 
 Required arguments: 
 
 --in : directory where image slices are located (e.g. C:/data/image_slices/), or a .raw file. If the input is a .raw file, an accompanying .dat file must be specified in the command (--dat [file.dat]).
 
 --out  : Specifies the location and names of the output files. If the argument value is directory/output_file_name, then the four output files are named as directory/output_file_name.ply (geometric skeleton), directory/output_file_annotations.txt (annotation file), directory/output_file_traits.csv (hierarchy measurements), and directory/output_file.off (Surface mesh for visualization)
+
+Highly recommended if not running in batch processing mode:
 
 --S : Shape iso-value. The global iso-value used to produce an initial iso-surface. See "picking shape, kernel, and neighborhood" section below. 
 
@@ -31,8 +33,29 @@ Optional arguments:
 
 --branchSizeMin: all branches greater than this length are considered in the measurements. Default = 50.
 
+--radiusTolerance: As a proportion of the stem radius, how far beyond the radius of the stem should a primary branch be identified. The default is 2.0, because due to the resolution branches may appear merged at first when close to the stem. Raise this value if there are branches close to the stem which fail to be identified, and lower it if higher-order branches are mistakenly included.
+
+--fromSkel : run the tool starting from the intermediate skeleton (before cycles are broken)
+
 If you encounter any issues, please contact me (Dan Zeng) at danzeng8@gmail.com or file an issue on Github. 
- 
+
+## Troubleshooting
+
+Occasionally, the primary branches will not be identified completely after a first run, especially when running the batch processing mode. A few errors may arise, including:
+* Missing primary branches, especially near the top of the panicle
+* Stem is too short, only being traced from the base to midway up the panicle
+* Stem is too long, and includes parts of branches
+* Missing primary branches due to the shape of the branches being merged, or disconnections in the shape
+
+The first three errors can usually be addressed by re-running the tool on the intermediate skeleton file. This saves time compared to having to re-run the tool on the original input volume.
+
+Panicle --fromSkel --out [outputFile : same name as used in the first run] --lowerRadius [float value between 0 and 1: default 0.15] --radiusTolerance [float value: default 2.0]
+
+* Missing primary branches near the top of the panicle can be addressed either by lowering the --lowerRadius parameter (if the stem is not fully traced to the very top), or by raising the --radiusTolerance parameter (though at the risk of mistakenly identifying higher-order branches as primary branches).
+* The stem being too short can be addressed by lowering the --lowerRadius parameter (try 0.1)
+* The stem being too long can be addressed by raising the --lowerRadius parameter (try 0.25)
+
+If there are missing primary branches due to a problem with the identified surface mesh (e.g. missing primary branches due to the branches not being separated on the 3D surface), then the tool needs to be re-run from the beginning, as described in the "Installation and Execution" section. If the branches appear merged together, open up UCSF Chimera (see TopoRoot tutorial), and pick a higher shape (--S) threshold which would separate the branches. If there are disconnections along the stem or primary branches, try lowering "--S" to a threshold which would connect those branches.
 
 ## Understanding the output
 
