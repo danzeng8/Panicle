@@ -39,6 +39,10 @@ Optional arguments:
 
 If you encounter any issues, please contact me (Dan Zeng) at danzeng8@gmail.com or file an issue on Github. 
 
+## Selecting a shape, kernel, and neighborhood threshold
+
+If you choose to use a shape, kernel, and/or neighborhood threshold, the criteria for picking these thresholds are very similar to that of TopoRoot (please see https://github.com/danzeng8/TopoRoot). The main difference is that the shape threshold should be picked above the intensity where the seeds appear (large, potentially hollow balls), which cause excessive cycles between the branches.
+
 ## Troubleshooting
 
 Occasionally, the primary branches will not be identified completely after a first run, especially when running the batch processing mode. A few errors may arise, including:
