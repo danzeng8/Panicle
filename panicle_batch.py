@@ -28,9 +28,10 @@ def main(argv):
    print('Downsampling rate is ', downsample)
    for filename in os.listdir(inputfile):
       if not filename.endswith(".dat") and not filename.endswith(".raw"):
-         outputStr = outputfile + filename[0:-4]
-         print("Processing ", inputfile+filename)
+         outputStr = outputfile + filename
+         print("Processing ", inputfile+filename, outputStr)
          command = "Panicle --in " + inputfile+filename + " --out " + outputStr + " --d " + str(downsample)
+
          os.system(command)
       if filename.endswith(".raw"):
          print("Processing ", inputfile+filename)
